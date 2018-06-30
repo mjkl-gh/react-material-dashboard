@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-# Create app directory
+# Create app directory 
 WORKDIR /usr/src/app
 
 # INSTALL DEPENDENCIES
