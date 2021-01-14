@@ -1,13 +1,20 @@
-FROM ubuntu:18.04
+# pull official base image
+FROM node:13.12.0-alpine
 
-# Create app directory 
-WORKDIR /usr/src/app
+# set working directory
+WORKDIR /app
 
-# INSTALL DEPENDENCIES
-RUN apt-get update; apt-get install nodejs npm git git-core -y
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-# CLONE APP AND RUN NPM INSTALL
-RUN git clone https://github.com/bsord/react-material-dashboard . && npm install
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
+RUN npm install react-scripts@3.4.1 -g
 
-EXPOSE 3000
-CMD ["npm", "start" ]
+# add app
+COPY . ./
+
+# start app
+CMD ["npm", "start"]
